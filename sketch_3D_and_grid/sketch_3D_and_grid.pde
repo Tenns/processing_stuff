@@ -2,14 +2,20 @@ void setup(){
   size(500, 500, P3D);
   rectMode(CENTER);
   
+    surface.setResizable(true);
+  
   
 }
+
+float space;
+float zoom = 1;
 PVector rando = new PVector(0, 0, 0);
+
 void draw(){
   background(0);
   lights();
   
-  if(frameCount % 30 == 1){
+  if(frameCount % 150 == 1){
     do{
     rando = new PVector(random(-100, 220), random(-100, 220), random(-100, 220));
     } while ((rando.mag() < 50) ||(rando.mag() > 100) ) ;
@@ -27,8 +33,12 @@ void draw(){
   rotateX(HALF_PI);
   scale(-1, 1, 1);
   
+  scale(zoom);
+  
   rotateY((mouseY - height/2)* 0.01);
   rotateZ((mouseX - width/2)* 0.01);
+  
+  
   
   /*
   fill(255, 0, 255);
@@ -55,6 +65,17 @@ void draw(){
   line(0, 0, 0, 0, 0, 100);
   
   stroke(0);
+  
+  if(keyPressed){
+    switch(key){
+      case(' '):
+        space += 0.01;
+      break;
+    }
+  }
+  
+  rotateZ(space);
+  
   
   float trythis = acos(rando.z / rando.mag());
   rotateY(PI -trythis);
@@ -84,6 +105,9 @@ void draw(){
   } else {
     rotateZ(angle);
   }
+  
+  
+  
   //  println(angle, test);
   
   fill(255);
@@ -179,6 +203,14 @@ void drawGrid(float posX, float posY, float size, int number){
       }
   popMatrix();
   rectMode(rectModeOld);
+}
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+
+  zoom = zoom + zoom * e * 0.01;
+  ; 
+  //println(zoom);
 }
 
 /**
