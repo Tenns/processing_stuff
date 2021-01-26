@@ -19,16 +19,16 @@ void draw(){
   
   float fov = PI / 3.0; 
   float cameraZ = (height/2.0) / tan(fov/2.0); 
-  perspective(fov, float(width)/float(height), cameraZ/2.0, cameraZ*2.0); 
+  perspective(fov, float(width)/float(height), cameraZ/16.0, cameraZ*16.0); 
 
   translate(width/2, height/2, 0);
-  translate(0, 126);
+  //translate(0, 126);
   rotateY(HALF_PI);
   rotateX(HALF_PI);
   scale(-1, 1, 1);
   
-  rotateY(mouseX * 0.01);
-  rotateZ(dr);
+  rotateY((mouseY - height/2)* 0.01);
+  rotateZ((mouseX - width/2)* 0.01);
   
   /*
   fill(255, 0, 255);
