@@ -1,13 +1,13 @@
 import ketai.sensors.*;
 
 KetaiSensor sensor;
-float accelerometerX, accelerometerY, accelerometerZ;
+float gravityX, gravityY, gravityZ;
 
-void onAccelerometerEvent(float x, float y, float z)
+void onGravityEvent(float x, float y, float z)
 {
-  accelerometerX = x;
-  accelerometerY = y;
-  accelerometerZ = z;
+  gravityX = x;
+  gravityY = y;
+  gravityZ = z;
 }
 
 void setup(){
@@ -29,8 +29,8 @@ void draw(){
     } while ((rando.mag() < 50) ||(rando.mag() > 100) ) ;
   }
   */
-  PVector rando = new PVector(accelerometerX, accelerometerY, accelerometerZ);
-  
+  PVector rando = new PVector(gravityX, gravityY, gravityZ);
+  rando.mult(10);
   float dr = frameCount * 0.01;
   
   float fov = PI / 3.0; 
@@ -42,6 +42,8 @@ void draw(){
   rotateY(HALF_PI);
   rotateX(HALF_PI);
   scale(-1, 1, 1);
+  
+  scale(10);
   
   rotateY((mouseY - height/2)* 0.01);
   rotateZ((mouseX - width/2)* 0.01);
