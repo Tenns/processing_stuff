@@ -115,6 +115,17 @@ void draw(){
   }
   //  println(angle, test);
   
+
+  fill(255); 
+  stroke(255);
+
+  vector3D(rando);
+  
+  //  println(angle, test);
+  rotateX(rotationX);
+  rotateY(rotationY);
+  rotateZ(rotationZ);
+  
   fill(255);
   stroke(100);
   //drawGrid(0,0, 470, 10);
@@ -146,10 +157,7 @@ void draw(){
   vector3D(0, 0, 0, 0, 0, 100);
   */
   
-  fill(255); 
-  stroke(255);
-
-  vector3D(rando);
+  
   stroke(0);
   
   noStroke();
