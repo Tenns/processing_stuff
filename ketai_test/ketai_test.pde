@@ -1,20 +1,13 @@
 import ketai.sensors.*;
 
 KetaiSensor sensor;
-PVector gravity;
-PVector rotation;
+float gravityX, gravityY, gravityZ;
 
 void onGravityEvent(float x, float y, float z)
 {
-  gravity.x = x;
-  gravity.y = y;
-  gravity.z = z;
-}
-void onGyroscopeEvent(float x, float y, float z)
-{
-  rotation.x += x;
-  rotation.y += y;
-  rotation.z += z;
+  gravityX = x;
+  gravityY = y;
+  gravityZ = z;
 }
 
 void setup(){
@@ -36,8 +29,8 @@ void draw(){
     } while ((rando.mag() < 50) ||(rando.mag() > 100) ) ;
   }
   */
-  println(rotation);
-  PVector rando = PVector.mult(gravity, 10);
+  PVector rando = new PVector(gravityX, gravityY, gravityZ);
+  rando.mult(10);
   float dr = frameCount * 0.01;
   
   float fov = PI / 3.0; 
@@ -78,9 +71,6 @@ void draw(){
   
   stroke(0, 255, 255);  
   line(0, 0, 0, 0, 0, 100);
-  
-  rotateZ(rotation.z);
-
   
   stroke(0);
   
