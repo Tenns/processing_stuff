@@ -89,13 +89,13 @@ class Ball  {
     float forceMagnitude =  G * (attractor.Mass * Mass) / (dist * dist);
     PVector force = thisObjectToAttractor.mult(forceMagnitude / dist );
     
-    applyNewForce(this, force);
+    addNewForce(this, force);
   }
   
-  void renderTrajectory(){
+  void renderTrajectory(color colorOfDots){
     
-    fill(255);
-    stroke(255);
+    fill(colorOfDots);
+    stroke(colorOfDots);
     strokeWeight(5);
     
     for(PVector point : trajectory){
@@ -103,6 +103,10 @@ class Ball  {
       point(visualPoint.x, visualPoint.y);
     }
     
+  }
+  
+  void renderTrajectory(){
+    renderTrajectory(color(255));
   }
   void renderRadiusOfPathCurvature(){
     float angle = PVector.angleBetween(Vel, Acc) + HALF_PI;
