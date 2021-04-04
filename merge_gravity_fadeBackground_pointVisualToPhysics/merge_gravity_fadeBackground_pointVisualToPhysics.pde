@@ -27,6 +27,10 @@ Ball[] balls = new Ball[3];
 Ball[] trajectoryBalls;
 PVector center;
 color debug = color(0, 0, 0);
+
+Ball[] localCopy = new Ball[balls.length];
+
+
 void setup(){
   size(1000, 1000, P2D);
   
@@ -69,25 +73,36 @@ void setup(){
   // HERE WE ARE CALCULATING THE FUTURE TRAJECTORIES OF THE BALLS
   
   
-  
+  for(int i = 0; i < balls.length; i++){
+    localCopy[i] = new Ball(balls[i]);
+  }
 }
 
 void draw(){
-  background(debug);
-  
+  background(0);
   //renderPhysicsGrid(1, color(75));
-  int mod7 = frameCount % 7;
+  //int mod7 = frameCount % 7;
   
-  renderUnits();
+  //renderUnits();
   println();
   println();
   println();
   //println("Frame", frameCount, ":");
-  color collisionColor = color(255, 20, 20, 50);
+  //color collisionColor = color(255, 20, 20, 50);
   
+  simulateGravityStep(localCopy);
+  simulateGravityStep(balls);
+  
+  for(int i = 0; i < localCopy.length; i++){
+    localCopy[i].render();
+    localCopy[i].renderAcc();
+    localCopy[i].renderVel();
+    localCopy[i].renderTrajectory();
+  }
+  
+  /*
   if(playback == true){
-    debug = color(0, 0, 0);
-    simulateGravityStep(balls);
+    
     renderFuturTrajectories(balls, collisionColor);
   } else {
     renderFuturTrajectories(balls, collisionColor);
@@ -104,13 +119,14 @@ void draw(){
     //println(frameRate);
     balls[selectedBall].Vel = velocityOfMouse;  
   }
-  
+  */
   for(int i = 0; i < balls.length; i++){
+    balls[i].renderTrajectory();
     balls[i].render();
     balls[i].renderAcc();
     balls[i].renderVel();
-    balls[i].renderTrajectory();
   }
+  
   //println(balls[0].Acc );
   
   
@@ -125,7 +141,7 @@ void draw(){
   //renderCrosshair();
 
  
-  ppmousePhys[mod7] = pointVisualToPhysics(PVector(pmouseX, pmouseY));
+  //ppmousePhys[mod7] = pointVisualToPhysics(PVector(pmouseX, pmouseY));
   
   if(keyPressed && key == 's'){
     println();
@@ -145,10 +161,10 @@ void draw(){
 }  
 
 void renderFuturTrajectories(Ball[] toBeCalculated, color colideColor){
-  Ball[] localCopy = new Ball[toBeCalculated.length];
+  
   
   for(int i = 0; i < toBeCalculated.length; i++){
-      localCopy[i] = new Ball(balls[i]);
+      localCopy[i] = new Ball(toBeCalculated[i]);
       localCopy[i].Color = colideColor;
   }
     
