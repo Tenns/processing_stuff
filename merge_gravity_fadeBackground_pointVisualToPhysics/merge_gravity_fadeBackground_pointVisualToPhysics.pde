@@ -24,9 +24,7 @@ PVector[] ppmousePhys = new PVector[7];
 
 Arrow[] arrows = new Arrow[enableArrow];
 Ball[] balls = new Ball[3];
-Ball[] trajectoryBalls;
-PVector center;
-color debug = color(0, 0, 0);
+//Ball[] trajectoryBalls;
 
 Ball[] localCopy = new Ball[balls.length];
 
@@ -62,8 +60,6 @@ void setup(){
   
   //ball1.visualVectorScale = 1;
   
-  center = new PVector(10, 0);
-  
   //DO NOT COMMENT THIS BLOCK OUT, IT IS NOT USEFUL TO REMOVE IT IN ORDER TO REMOVE ARROWS, THE PROPER WAY TO DO IT IS TO CHANGE "enableArrow" TO 0 UP, ABOVE SETUP
   if(enableArrow == 1){
     arrows[0] = new Arrow();
@@ -88,16 +84,19 @@ void draw(){
   println();
   println();
   //println("Frame", frameCount, ":");
-  //color collisionColor = color(255, 20, 20, 50);
+  color collisionColor = color(255, 20, 20, 50);
   
-  simulateGravityStep(localCopy);
-  simulateGravityStep(balls);
-  
+   simulateGravityStep(localCopy);
+  //renderFuturTrajectories(localCopy, collisionColor);
+  //simulateGravityStep(balls);
+  //renderFuturTrajectories(balls, collisionColor);
+  for(int i = 0; i < localCopy.length; i++){
+    localCopy[i].renderTrajectory();
+  }
   for(int i = 0; i < localCopy.length; i++){
     localCopy[i].render();
     localCopy[i].renderAcc();
     localCopy[i].renderVel();
-    localCopy[i].renderTrajectory();
   }
   
   /*
@@ -121,10 +120,10 @@ void draw(){
   }
   */
   for(int i = 0; i < balls.length; i++){
-    balls[i].renderTrajectory();
+    //balls[i].renderTrajectory();
     balls[i].render();
-    balls[i].renderAcc();
-    balls[i].renderVel();
+    //balls[i].renderAcc();
+    //balls[i].renderVel();
   }
   
   //println(balls[0].Acc );
@@ -188,7 +187,6 @@ void renderFuturTrajectories(Ball[] toBeCalculated, color colideColor){
 }
 
 boolean simulateGravityStep(Ball[] list){
-  debug = color(0, 0, 0);
   
   for(int i = 0; i < list.length; i++){
     list[i].update();
@@ -364,6 +362,7 @@ void keyPressed(){
     playback = true;
   }
 }
+
 void addNewForce(Ball item, PVector force){
   item.Acc.add(PVector.div(force, item.Mass));
 }
